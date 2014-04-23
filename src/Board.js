@@ -139,13 +139,36 @@
     // --------------------------------------------------------------
     //
     // test if a specific major diagonal on this board contains a conflict
-    hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+    // index is majorDiagonalColumnIndexAtFirstRow
+    hasMajorDiagonalConflictAt: function(index) {
+      var counter = 0;
+      var startingRow = 0;
+      var diagonalLength = this.attributes.n - Math.abs(index);
+
+      // this is an ugly way of starting the loop in the right place for negative indices
+      if(index < 0) {
+        startingRow = -index;
+        diagonalLength += startingRow;
+      }
+      for(var i = startingRow; i < diagonalLength; i++) {
+        if(this.attributes[i][i+index] === 1) {
+          counter++;
+        }
+        if(counter >= 2) {
+          return true;
+        }
+      }
+      return false;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      for(var i = -this.attributes.n+2; i < this.attributes.n-1; i++) {
+        if(this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
