@@ -143,14 +143,14 @@
     hasMajorDiagonalConflictAt: function(index) {
       var counter = 0;
       var startingRow = 0;
-      var diagonalLength = this.attributes.n - Math.abs(index);
+      var endingRow = this.attributes.n - Math.abs(index);
 
       // this is an ugly way of starting the loop in the right place for negative indices
       if(index < 0) {
         startingRow = -index;
-        diagonalLength += startingRow;
+        endingRow += startingRow;
       }
-      for(var i = startingRow; i < diagonalLength; i++) {
+      for(var i = startingRow; i < endingRow; i++) {
         if(this.attributes[i][i+index] === 1) {
           counter++;
         }
@@ -177,13 +177,38 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
-    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+    // index is minorDiagonalColumnIndexAtFirstRow
+    hasMinorDiagonalConflictAt: function(index) {
+      var counter = 0;
+      var lastIndex = this.attributes.n - 1;
+      var start = 0;
+      var end = index+1;
+
+      // this is an ugly way of starting the loop in the right place for indices
+      // that are greater than n-1
+      if(index > lastIndex) {
+        start = index - lastIndex;
+        end = lastIndex;
+      }
+      for(var i = start; i < end; i++) {
+        if(this.attributes[i][index-i] === 1) {
+          counter++;
+        }
+        if(counter >= 2) {
+          return true;
+        }
+      }
+      return false;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      for(var i = 0; i < 2*(this.attributes.n)-1; i++) {
+        if(this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
