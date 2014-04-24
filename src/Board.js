@@ -79,7 +79,7 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      var row = this.attributes[rowIndex];
+      var row = this.rows()[rowIndex];
       var counter = 0;
       for(var i = 0; i < row.length; i++) {
         if(row[i] === 1) {
@@ -112,7 +112,7 @@
     hasColConflictAt: function(colIndex) {
       var counter = 0;
       for(var i = 0; i < this.attributes.n; i++) {
-        if(this.attributes[i][colIndex] === 1) {
+        if(this.rows()[i][colIndex] === 1) {
           counter++;
         }
         if(counter >= 2) {
@@ -151,7 +151,7 @@
         endingRow += startingRow;
       }
       for(var i = startingRow; i < endingRow; i++) {
-        if(this.attributes[i][i+index] === 1) {
+        if(this.rows()[i][i+index] === 1) {
           counter++;
         }
         if(counter >= 2) {
@@ -191,7 +191,7 @@
         end = lastIndex;
       }
       for(var i = start; i < end; i++) {
-        if(this.attributes[i][index-i] === 1) {
+        if(this.rows()[i][index-i] === 1) {
           counter++;
         }
         if(counter >= 2) {
