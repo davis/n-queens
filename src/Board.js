@@ -188,7 +188,7 @@
       // that are greater than n-1
       if(index > lastIndex) {
         start = index - lastIndex;
-        end = lastIndex;
+        end = this.attributes.n;
       }
       for(var i = start; i < end; i++) {
         if(this.rows()[i][index-i] === 1) {
